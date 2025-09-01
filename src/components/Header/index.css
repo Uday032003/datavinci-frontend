@@ -132,12 +132,12 @@
     border-bottom: 1px solid grey;
     margin-bottom: 0;
     margin-top: 0;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
   }
 
   .navbar-item2 {
     letter-spacing: 2px;
-    font-size: 12px;
+    font-size: 14px;
     color: #313131;
     cursor: pointer;
     margin-left: 25px;
