@@ -664,6 +664,7 @@
   flex-direction: column;
   margin-top: 0;
   position: absolute;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
 }
 
 .magic-cont-hide {
@@ -1173,13 +1174,21 @@
 
   .last-btn {
     display: inline;
-    font-size: 13px;
+    font-size: 10px;
     letter-spacing: 1px;
     background-color: white;
-    border-radius: 8px;
-    border: none;
+    border-radius: 15px;
+    border: 1px solid grey;
     width: 100px;
     margin-top: 30px;
     margin-bottom: 20px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+
+  .final-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 }

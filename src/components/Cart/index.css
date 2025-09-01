@@ -2,12 +2,12 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background-color: #fbf9f6;
   font-family: "Roboto";
   color: #313131;
-  height: 30vh;
+  padding-top: 40px;
 }
 
 .cart-list-container {
@@ -26,6 +26,7 @@
   border-radius: 20px;
   padding: 20px 30px;
   margin-bottom: 10px;
+  position: relative;
 }
 
 .cart-connt {
@@ -89,6 +90,10 @@
   text-align: left;
 }
 
+.oooo {
+  text-align: center;
+}
+
 .cart-size-span {
   font-size: 22px;
   font-weight: bold;
@@ -121,7 +126,31 @@
   font-weight: bold;
 }
 
+.cart-plus-icon {
+  font-size: 25px;
+  margin-top: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.cart-bundle-cont {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart-delete-icon {
+  font-size: 25px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
+}
+
 @media (max-width: 500px) {
+  .cart-container {
+    padding-top: 20px;
+  }
+
   .cart-list-container {
     width: 100%;
   }
@@ -164,10 +193,12 @@
 
   .cart-price-text {
     font-size: 10px;
+    text-align: center;
   }
 
   .cart-size-span {
     font-size: 16px;
+    text-align: center;
   }
 
   .cart-price-span {
@@ -186,5 +217,27 @@
 
   .cart-empty {
     font-size: 20px;
+  }
+
+  .cart-plus-icon {
+    font-size: 15px;
+    margin-top: 15px;
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+
+  .pppp {
+    width: 50px;
+    height: 50px;
+  }
+
+  .uuuu {
+    font-size: 11px;
+  }
+
+  .cart-delete-icon {
+    font-size: 15px;
+    right: 10px;
+    top: 10px;
   }
 }

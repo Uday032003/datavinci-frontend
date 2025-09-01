@@ -65,6 +65,12 @@
   color: black;
 }
 
+@media (min-width: 501px) {
+  .navbar-container {
+    display: none;
+  }
+}
+
 @media (max-width: 500px) {
   .header-container {
     justify-content: space-between;
@@ -105,5 +111,35 @@
     width: 10px;
     font-size: 12px;
     padding: 1px 5px;
+  }
+
+  .navbar-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    background-color: #fbf9f6;
+  }
+
+  .navbar-hidden {
+    display: none;
+  }
+
+  .navbar-item {
+    width: 100%;
+    background-color: #fbf9f6;
+    margin: 8px;
+    border-bottom: 1px solid grey;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-bottom: 5px;
+  }
+
+  .navbar-item2 {
+    letter-spacing: 2px;
+    font-size: 12px;
+    color: #313131;
+    cursor: pointer;
+    margin-left: 25px;
   }
 }

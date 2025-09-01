@@ -72,15 +72,97 @@ const itemDetailsList = [
   },
 ];
 
+const bundleItemsList = [
+  {
+    id: 11,
+    imageUrl1:
+      "https://res.cloudinary.com/dnxaaxcjv/image/upload/v1756560457/066620652678ace2a8b18d99958799a6750696c0_wu4zr6.png",
+    imageUrl2:
+      "https://res.cloudinary.com/dnxaaxcjv/image/upload/v1756560463/327394c3fd8ec3ec3d902b06fa874c76353a27e5_mfuu4r.png",
+  },
+  {
+    id: 12,
+    imageUrl1:
+      "https://res.cloudinary.com/dnxaaxcjv/image/upload/v1756560460/7de1f09601655c832d5893519fdcced0e555d0c4_j3mj2p.png",
+    imageUrl2:
+      "https://res.cloudinary.com/dnxaaxcjv/image/upload/v1756560458/58c66a54fbac705a9aec08ed66696b0281f25e4a_iawecn.png",
+  },
+  {
+    id: 13,
+    imageUrl1:
+      "https://res.cloudinary.com/dnxaaxcjv/image/upload/v1756560458/58c66a54fbac705a9aec08ed66696b0281f25e4a_iawecn.png",
+    imageUrl2:
+      "https://res.cloudinary.com/dnxaaxcjv/image/upload/v1756560457/9e1262aea547565b6267d2ade6938b34433af5bb_yt7u4m.png",
+  },
+  {
+    id: 14,
+    imageUrl1:
+      "https://res.cloudinary.com/dnxaaxcjv/image/upload/v1756560457/066620652678ace2a8b18d99958799a6750696c0_wu4zr6.png",
+    imageUrl2:
+      "https://res.cloudinary.com/dnxaaxcjv/image/upload/v1756560458/58c66a54fbac705a9aec08ed66696b0281f25e4a_iawecn.png",
+  },
+];
+
 const Home = () => {
   const [image, setImage] = useState(0);
   const [varient, setVarient] = useState(1);
   const [quantity, setQuantity] = useState(1);
   const [purchaseOption, setPurchaseOption] = useState(1);
   const [magicCont, setMagicCont] = useState(false);
-  const { addCartItems } = useContext(CartContext);
+  const [bundleItem, setBundleItem] = useState(0);
+  const [umf20plusSize, setUmf20plusSize] = useState("250g");
+  const [umf24plusSize, setUmf24plusSize] = useState("250g");
+  const { addCartItems, addcartBundleItem } = useContext(CartContext);
   const actualPrice = itemDetailsList[varient - 1].price * quantity;
   const discountedPrice = itemDetailsList[varient - 1].price * 0.8 * quantity;
+  let bundle20plusPrice = 0;
+  let bundle24plusPrice = 0;
+  switch (umf20plusSize) {
+    case "250g":
+      bundle20plusPrice = 198.29;
+      break;
+    case "225g":
+      bundle20plusPrice = 179.46;
+      break;
+    case "200g":
+      bundle20plusPrice = 161.63;
+      break;
+    case "175g":
+      bundle20plusPrice = 143.79;
+      break;
+    case "150g":
+      bundle20plusPrice = 126.33;
+      break;
+    case "125g":
+      bundle20plusPrice = 109.14;
+      break;
+    default:
+      break;
+  }
+  switch (umf24plusSize) {
+    case "250g":
+      bundle24plusPrice = 280.46;
+      break;
+    case "225g":
+      bundle24plusPrice = 254.41;
+      break;
+    case "200g":
+      bundle24plusPrice = 227.37;
+      break;
+    case "175g":
+      bundle24plusPrice = 201.9;
+      break;
+    case "150g":
+      bundle24plusPrice = 176.28;
+      break;
+    case "125g":
+      bundle24plusPrice = 150.11;
+      break;
+    default:
+      break;
+  }
+  const bundleTotalPrice = bundle20plusPrice + bundle24plusPrice;
+  const bundleDiscountPrice = bundleTotalPrice * 0.9;
 
   const onClickedAddToCartBtn = () => {
     addCartItems({
@@ -88,6 +170,21 @@ const Home = () => {
       quantity,
       price: purchaseOption === 1 ? actualPrice : discountedPrice,
     });
+    setQuantity(1);
+    setPurchaseOption(1);
+    setVarient(1);
+  };
+
+  const onClickedAddBundleToCartBtn = () => {
+    addcartBundleItem({
+      ...bundleItemsList[bundleItem],
+      umf20plusSize,
+      umf24plusSize,
+      bundleDiscountPrice,
+    });
+    setUmf20plusSize("250g");
+    setUmf24plusSize("250g");
+    setBundleItem((prev) => (prev + 1) % bundleItemsList.length);
   };
 
   return (
@@ -174,7 +271,7 @@ const Home = () => {
           <div className="disclaimer-container">
             <IoMdInformationCircleOutline
               className="home-info-icon"
-              onClick={() => setMagicCont(true)}
+              onClick={() => setMagicCont((prev) => !prev)}
             />
             <span className="disclaimer-text">What is UMF and MGO?</span>
           </div>
@@ -407,12 +504,33 @@ const Home = () => {
           </div>
           <div className="beauty-bundle-container">
             <div className="top-cont">
-              <button type="button" className="top-btn top-left">
-                <PiCaretLeftLight className="" />
+              <button
+                type="button"
+                className="top-btn"
+                onClick={() => {
+                  bundleItem !== 0 && setBundleItem((prev) => prev - 1);
+                  setUmf20plusSize("250g");
+                  setUmf24plusSize("250g");
+                }}
+              >
+                <PiCaretLeftLight className={bundleItem === 0 && "top-left"} />
               </button>
               <span className="top-text">Beauty Bundle</span>
-              <button type="button" className="top-btn">
-                <PiCaretRightLight className="" />
+              <button
+                type="button"
+                className="top-btn"
+                onClick={() => {
+                  bundleItem !== bundleItemsList.length - 1 &&
+                    setBundleItem((prev) => prev + 1);
+                  setUmf20plusSize("250g");
+                  setUmf24plusSize("250g");
+                }}
+              >
+                <PiCaretRightLight
+                  className={
+                    bundleItem === bundleItemsList.length - 1 && "top-left"
+                  }
+                />
               </button>
             </div>
             <div className="bundle-items-add-bundle-btn-container">
@@ -422,13 +540,21 @@ const Home = () => {
                     <img
                       className="connt-img"
                       alt="bundle-image"
-                      src="https://res.cloudinary.com/dnxaaxcjv/image/upload/v1756560457/066620652678ace2a8b18d99958799a6750696c0_wu4zr6.png"
+                      src={bundleItemsList[bundleItem].imageUrl1}
                     />
                   </div>
                   <p className="connt-text">UMF 20+</p>
-                  <select className="connt-drop-down-cont">
-                    <option>250g</option>
+                  <select
+                    className="connt-drop-down-cont"
+                    value={umf20plusSize}
+                    onChange={(e) => setUmf20plusSize(e.target.value)}
+                  >
+                    <option>125g</option>
                     <option>150g</option>
+                    <option>175g</option>
+                    <option>200g</option>
+                    <option>225g</option>
+                    <option>250g</option>
                   </select>
                 </div>
                 <span className="connt-plus">+</span>
@@ -437,13 +563,21 @@ const Home = () => {
                     <img
                       className="connt-img"
                       alt="bundle-image"
-                      src="https://res.cloudinary.com/dnxaaxcjv/image/upload/v1756560463/327394c3fd8ec3ec3d902b06fa874c76353a27e5_mfuu4r.png"
+                      src={bundleItemsList[bundleItem].imageUrl2}
                     />
                   </div>
                   <p className="connt-text">UMF 24+</p>
-                  <select className="connt-drop-down-cont">
-                    <option>250g</option>
+                  <select
+                    className="connt-drop-down-cont"
+                    value={umf24plusSize}
+                    onChange={(e) => setUmf24plusSize(e.target.value)}
+                  >
+                    <option>125g</option>
                     <option>150g</option>
+                    <option>175g</option>
+                    <option>200g</option>
+                    <option>225g</option>
+                    <option>250g</option>
                   </select>
                 </div>
                 <span className="connt-plus">+</span>
@@ -463,11 +597,19 @@ const Home = () => {
               </div>
               <div className="add-bundle-btn-container">
                 <div className="prices-cont">
-                  <span className="prices-span1">$478.75 USD</span>
-                  <span className="prices-span2">$430.88 USD</span>
+                  <span className="prices-span1">
+                    ${bundleTotalPrice.toFixed(2)} USD
+                  </span>
+                  <span className="prices-span2">
+                    ${bundleDiscountPrice.toFixed(2)} USD
+                  </span>
                   <span className="prices-span3">Save 10%</span>
                 </div>
-                <button type="button" className="add-bundle-to-cart-btn">
+                <button
+                  type="button"
+                  className="add-bundle-to-cart-btn"
+                  onClick={onClickedAddBundleToCartBtn}
+                >
                   ADD BUNDLE TO CART
                 </button>
               </div>
@@ -586,6 +728,8 @@ const Home = () => {
               alt="logo-image"
               className="logo-image-bot"
             />
+          </div>
+          <div className="final-btn-container">
             <button type="button" className="last-btn">
               FIND OUT MORE
             </button>

@@ -8,6 +8,7 @@ import "./App.css";
 
 const App = () => {
   const [cartItemsList, setCartItemsList] = useState([]);
+  const [cartBundleItemsList, setCartBundleItemsList] = useState([]);
 
   const addCartItems = (obj) => {
     const filtedList = cartItemsList.filter((i) => i.id === obj.id);
@@ -57,12 +58,36 @@ const App = () => {
     }
   };
 
+  const addcartBundleItem = (obj) => {
+    const filteredList = cartBundleItemsList.filter((i) => i.id === obj.id);
+    if (filteredList.length === 1) {
+      setCartBundleItemsList(
+        cartBundleItemsList.map((i) => ({
+          ...i,
+          umf20plusSize: obj.umf20plusSize,
+          umf24plusSize: obj.umf20plusSize,
+          bundleDiscountPrice: obj.bundleDiscountPrice,
+        }))
+      );
+    } else {
+      setCartBundleItemsList([...cartBundleItemsList, obj]);
+    }
+  };
+
+  const removeItem = (id) => {
+    setCartItemsList(cartItemsList.filter((i) => i.id !== id));
+    setCartBundleItemsList(cartBundleItemsList.filter((i) => i.id !== id));
+  };
+
   return (
     <CartContext.Provider
       value={{
         cartItemsList,
         addCartItems,
         changeCartItems,
+        cartBundleItemsList,
+        addcartBundleItem,
+        removeItem,
       }}
     >
       <Routes>
