@@ -113,7 +113,7 @@ const Home = () => {
   const [bundleItem, setBundleItem] = useState(0);
   const [umf20plusSize, setUmf20plusSize] = useState("250g");
   const [umf24plusSize, setUmf24plusSize] = useState("250g");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { addCartItems, addcartBundleItem } = useContext(CartContext);
   const actualPrice = itemDetailsList[varient - 1].price * quantity;
   const discountedPrice = itemDetailsList[varient - 1].price * 0.8 * quantity;
